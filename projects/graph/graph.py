@@ -13,13 +13,19 @@ class Graph:
         """
         Add a vertex to the graph.
         """
-        pass  # TODO
+        if vertex_id not in self.vertices:
+            #set it up as a set of vertices and edges.
+            self.vertices[vertex_id] = set()
 
     def add_edge(self, v1, v2):
         """
         Add a directed edge to the graph.
         """
-        pass  # TODO
+        if v1 in self.vertices and v2 in self.vertices:
+            #goes into vertices set and adds the connected vertex
+            self.vertices[v1].add(v2)
+        else:
+            print("One of them ain't in this graph")
 
     def get_neighbors(self, vertex_id):
         """
