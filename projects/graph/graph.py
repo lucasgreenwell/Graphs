@@ -39,7 +39,27 @@ class Graph:
         Print each vertex in breadth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+        #set up the queue of all the shit you gotta look at, put the thing they give you first
+        queue = []
+        queue.append(starting_vertex)
+        #set up a place where you can track all the shit you already looked at
+        #use a set whenever you know you won't have duplicates because they run in constant time
+        nodes_i_already_saw = set()
+        #so if there's stuff to do
+        while len(queue) > 0:
+            #imma needya to take care of it
+            #first things first
+            current_node = queue[0]
+            queue.pop(0)
+            if current_node not in nodes_i_already_saw:
+                #stamp it's passport
+                nodes_i_already_saw.add(current_node)
+                print(current_node)
+                #hit all of his friends too
+                for node in self.vertices[current_node]:
+                    queue.append(node)
+
+
 
     def dft(self, starting_vertex):
         """
