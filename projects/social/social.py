@@ -64,10 +64,6 @@ class SocialGraph:
         for friendship in friendships_to_add:
             self.add_friendship(friendship[0], friendship[1])
 
-
-
-
-
     def get_all_social_paths(self, user_id):
         """
         Takes a user's user_id as an argument
@@ -78,7 +74,22 @@ class SocialGraph:
         The key is the friend's ID and the value is the path.
         """
         visited = {}  # Note that this is a dictionary, not a set
-        # !!!! IMPLEMENT ME
+        #queue for breadth first searching
+        queue = []
+        #breadth first searching
+        queue.append([user_id])
+
+        while len(queue) > 0:
+            path = queue.pop(0)
+            friend_id = path[-1]
+
+            if friend_id not in visited:
+                visited[friend_id] = path
+
+                for next_friend_id in self.friendships[friend_id]:
+                    new_path = path + [next_friend_id]
+                    queue.append(new_path)
+        #after it breadth first searches all of the paths it returns the list of all of the paths
         return visited
 
 
