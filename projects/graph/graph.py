@@ -104,7 +104,26 @@ class Graph:
         starting_vertex to destination_vertex in
         breath-first order.
         """
-        pass  # TODO
+        queue = []
+        queue.append([starting_vertex])
+        nodes_i_already_saw = set()
+
+        while len(queue) > 0:
+            possible_path = queue.pop(0)
+            path = possible_path
+            current_node = possible_path[-1]
+            if current_node not in nodes_i_already_saw:
+                nodes_i_already_saw.add(current_node)
+                if current_node is destination_vertex:
+                    return path
+            for other_node in self.get_neighbors(current_node):
+                new_path = list(path)
+                new_path.append(other_node)
+                queue.append(new_path)
+
+
+
+
 
     def dfs(self, starting_vertex, destination_vertex):
         """
@@ -112,9 +131,23 @@ class Graph:
         starting_vertex to destination_vertex in
         depth-first order.
         """
-        pass  # TODO
+        stack = []
+        path = []
+        stack.append(starting_vertex)
+        nodes_i_already_saw = set()
 
-    def dfs_recursive(self, starting_vertex, destination_vertex):
+        while len(stack) > 0:
+            current_node = stack.pop(-1)
+            if current_node not in nodes_i_already_saw:
+                nodes_i_already_saw.add(current_node)
+                path.append(current_node)
+                if current_node is destination_vertex:
+                    return path
+                for node in self.vertices[current_node]:
+                    stack.append(node)
+
+
+    def dfs_recursive(self, starting_vertex, destination_vertex, nodes_i_already_saw = None, path = None):
         """
         Return a list containing a path from
         starting_vertex to destination_vertex in
@@ -122,7 +155,21 @@ class Graph:
 
         This should be done using recursion.
         """
-        pass  # TODO
+        if path is None:
+            path = []
+        new_path = path + [starting_vertex]
+        if nodes_i_already_saw is not None:
+            nodes_i_already_saw.add(starting_vertex)
+        if starting_vertex is destination_vertex:
+            return new_path
+        if nodes_i_already_saw is None:
+            nodes_i_already_saw = set()
+
+        for node in self.vertices[starting_vertex]:
+            if node not in nodes_i_already_saw:
+                neighbor_path = self.dfs_recursive(node,destination_vertex, nodes_i_already_saw=nodes_i_already_saw, path=new_path)
+                if neighbor_path is not None:
+                    return neighbor_path
 
 if __name__ == '__main__':
     graph = Graph()  # Instantiate your graph
