@@ -15,6 +15,7 @@ class SocialGraph:
         """
         Creates a bi-directional friendship
         """
+        self.number_of_times_that_we_called_add_friend += 1
         if user_id == friend_id:
             print("WARNING: You cannot be friends with yourself")
         elif friend_id in self.friendships[user_id] or user_id in self.friendships[friend_id]:
@@ -45,6 +46,7 @@ class SocialGraph:
         self.last_id = 0
         self.users = {}
         self.friendships = {}
+        self.number_of_times_that_we_called_add_friend = 0
         # !!!! IMPLEMENT ME
 
         # Add users
@@ -95,7 +97,8 @@ class SocialGraph:
 
 if __name__ == '__main__':
     sg = SocialGraph()
-    sg.populate_graph(10, 2)
+    sg.populate_graph(100, 10)
+    print(sg.number_of_times_that_we_called_add_friend)
     print(sg.friendships)
     connections = sg.get_all_social_paths(1)
     print(connections)
